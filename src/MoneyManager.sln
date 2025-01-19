@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{51800564
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Services.Assets.Domain.Tests", "Services\Assets\Tests\MoneyManager.Services.Assets.Domain.Tests\MoneyManager.Services.Assets.Domain.Tests.csproj", "{4B2A23FB-42C8-4963-818D-74FC3C40A539}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Services.Assets.Repository", "Services\Assets\MoneyManager.Services.Assets.Repository\MoneyManager.Services.Assets.Repository.csproj", "{93752CDA-3ECB-4E4F-BCBF-4102907159BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{4B2A23FB-42C8-4963-818D-74FC3C40A539}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B2A23FB-42C8-4963-818D-74FC3C40A539}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B2A23FB-42C8-4963-818D-74FC3C40A539}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93752CDA-3ECB-4E4F-BCBF-4102907159BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93752CDA-3ECB-4E4F-BCBF-4102907159BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93752CDA-3ECB-4E4F-BCBF-4102907159BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93752CDA-3ECB-4E4F-BCBF-4102907159BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,5 +55,6 @@ Global
 		{342E19BD-6690-40A9-AD4A-56CA71B4FC84} = {FAE3D97B-8524-4E0D-9B51-9DE45894AC4C}
 		{51800564-DD3A-4CCA-9DCA-0DAFB65989BB} = {342E19BD-6690-40A9-AD4A-56CA71B4FC84}
 		{4B2A23FB-42C8-4963-818D-74FC3C40A539} = {51800564-DD3A-4CCA-9DCA-0DAFB65989BB}
+		{93752CDA-3ECB-4E4F-BCBF-4102907159BA} = {342E19BD-6690-40A9-AD4A-56CA71B4FC84}
 	EndGlobalSection
 EndGlobal
