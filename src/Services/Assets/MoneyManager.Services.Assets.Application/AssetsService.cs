@@ -42,10 +42,10 @@ namespace MoneyManager.Services.Assets.Application
         {
             var asset = await _repository.GetAssetAsync(assetId, cancellationToken);
 
-            return _mapper.Map<AssetResponse?>(asset);            
+            return _mapper.Map<AssetResponse?>(asset);
         }
 
-        public async Task<IEnumerable<CurrencyResponse>> GetCurrenciesAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<CurrencyResponse>> GetCurrenciesAsync(CancellationToken cancellationToken = default)
         {
             var currencies = await _repository.GetCurrenciesAsync(cancellationToken);
 

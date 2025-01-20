@@ -15,9 +15,15 @@ namespace MoneyManager.Services.Assets.Api
             builder.Services.AddAssetsServiceRepository();
 
             builder.Services.AddControllers();
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

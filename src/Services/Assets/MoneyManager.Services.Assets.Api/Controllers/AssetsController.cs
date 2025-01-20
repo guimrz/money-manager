@@ -4,7 +4,7 @@ using MoneyManager.Services.Assets.Application.Objects.Requests;
 
 namespace MoneyManager.Services.Assets.Api.Controllers
 {
-    [Route("assets")]
+    [Route("api/assets")]
     public class AssetsController : ControllerBase
     {
         private readonly IAssetsService _service;

@@ -5,7 +5,7 @@ using System.Net;
 
 namespace MoneyManager.Services.Assets.Api.Controllers
 {
-    [Route("currencies")]
+    [Route("api/currencies")]
     public class CurrenciesController : ControllerBase
     {
         private readonly IAssetsService _service;
