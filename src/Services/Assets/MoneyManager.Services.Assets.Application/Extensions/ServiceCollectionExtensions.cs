@@ -18,6 +18,7 @@ namespace MoneyManager.Services.Assets.Application.Extensions
             {
                 config.AddProfile<CurrencyMapProfile>();
                 config.AddProfile<AssetMapProfile>();
+                config.AddProfile<TransactionMapProfile>();
             });
 
             return services;

@@ -70,12 +70,22 @@ namespace MoneyManager.Services.Assets.Application
             return _mapper.Map<AssetResponse?>(asset);
         }
 
+        public async Task<IEnumerable<AssetResponse>> GetAssetsAsync(string? name, CancellationToken cancellationToken = default)
+        {
+            var assets = await _repository.Assets.AsNoTracking()
+                .Where(p => string.IsNullOrEmpty(name) || p.Name.Contains(name))
+                .ToListAsync(cancellationToken);
+
+            return _mapper.Map<IEnumerable<AssetResponse>>(assets);
+
+        }
+
         public async Task<IEnumerable<TransactionResponse>> GetAssetTransactionsAsync(Guid assetId, DateTimeOffset? dateFrom = null, DateTimeOffset? dateTo = null, CancellationToken cancellationToken = default)
         {
             var asset = await _repository.Assets
                 .AsNoTracking()
                 .Include(p => p.Transactions
-                    .Where(t => (dateFrom == null || t.Date >= dateFrom) && (dateTo == null || t.Date <= dateFrom)))
+                    .Where(t => (dateFrom == null || t.Date >= dateFrom) && (dateTo == null || t.Date <= dateTo)))
                 .SingleOrDefaultAsync(p => p.Id == assetId, cancellationToken);
 
             if (asset is null)

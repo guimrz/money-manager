@@ -28,7 +28,7 @@ namespace MoneyManager.Services.Assets.Api.Controllers
         /// </response>
         [HttpGet]
         [ProducesResponseType<CurrencyResponse[]>((int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetCurrenciesAsync(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetCurrencies(CancellationToken cancellationToken = default)
         {
             IEnumerable<CurrencyResponse> currencies = await _service.GetCurrenciesAsync(cancellationToken);
 
