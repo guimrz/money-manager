@@ -31,5 +31,13 @@ namespace MoneyManager.Services.Assets.Api.Controllers
 
             return asset is null ? NotFound() : Ok(asset);
         }
+
+        [HttpPost("{assetId:guid}/transactions")]
+        public async Task<IActionResult> CreateAssetTransactionAsync(Guid assetId, [FromBody] CreateTransactionRequest request, CancellationToken cancellationToken = default)
+        {
+            await _service.CreateAssetTransactionAsync(assetId, request, cancellationToken);
+
+            return Created();
+        }
     }
 }

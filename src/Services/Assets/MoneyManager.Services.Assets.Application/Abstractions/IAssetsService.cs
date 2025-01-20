@@ -7,8 +7,10 @@ namespace MoneyManager.Services.Assets.Application.Abstractions
     {
         Task<IEnumerable<CurrencyResponse>> GetCurrenciesAsync(CancellationToken cancellationToken = default);
 
-        Task<AssetResponse> CreateAssetAsync(CreateAssetRequest assetDetails, CancellationToken cancellationToken = default);
+        Task<AssetResponse> CreateAssetAsync(CreateAssetRequest asset, CancellationToken cancellationToken = default);
 
         Task<AssetResponse?> GetAssetAsync(Guid assetId, CancellationToken cancellationToken = default);
+
+        Task CreateAssetTransactionAsync(Guid assetId, CreateTransactionRequest transaction, CancellationToken cancellationToken = default);
     }
 }

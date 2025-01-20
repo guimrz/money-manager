@@ -12,6 +12,8 @@ namespace MoneyManager.Services.Assets.Repository.Abstractions
 
         Task<Asset?> GetAssetAsync(Guid assetId, CancellationToken cancellationToken = default);
 
+        Task<Asset> UpdateAssetAsync(Asset asset, CancellationToken cancellationToken = default);
+
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

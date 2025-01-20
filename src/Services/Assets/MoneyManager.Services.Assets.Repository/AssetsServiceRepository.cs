@@ -59,5 +59,12 @@ namespace MoneyManager.Services.Assets.Repository
         {
             await _dbContext.SaveChangesAsync(cancellationToken);   
         }
+
+        public Task<Asset> UpdateAssetAsync(Asset asset, CancellationToken cancellationToken = default)
+        {
+            var entry = _dbContext.Update(asset);
+
+            return Task.FromResult(entry.Entity);
+        }
     }
 }

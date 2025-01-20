@@ -21,21 +21,39 @@ namespace MoneyManager.Services.Assets.Application
             _mapper = mapper;
         }
 
-        public async Task<AssetResponse> CreateAssetAsync(CreateAssetRequest assetDetails, CancellationToken cancellationToken = default)
+        public async Task<AssetResponse> CreateAssetAsync(CreateAssetRequest asset, CancellationToken cancellationToken = default)
         {
-            var currency = await _repository.GetCurrencyAsync(assetDetails.CurrencyId, cancellationToken);
+            var currency = await _repository.GetCurrencyAsync(asset.CurrencyId, cancellationToken);
 
             if (currency is null)
             {
                 throw new InvalidOperationException("The specified currency is invalid.");
             }
 
-            Asset asset = new Asset(assetDetails.Name, assetDetails.CurrencyId);
+            Asset newAsset = new Asset(asset.Name, asset.CurrencyId);
 
-            asset = await _repository.InsertAssetAsync(asset, cancellationToken);
+            newAsset = await _repository.InsertAssetAsync(newAsset, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<AssetResponse>(asset);
+            return _mapper.Map<AssetResponse>(newAsset);
+        }
+
+        public async Task CreateAssetTransactionAsync(Guid assetId, CreateTransactionRequest transaction, CancellationToken cancellationToken = default)
+        {
+            Asset? asset = await _repository.GetAssetAsync(assetId, cancellationToken);
+
+            if (asset is null)
+            {
+                throw new InvalidOperationException("The specified asset could not be found.");
+            }
+
+            Transaction newTransaction = new Transaction(transaction.Amount, transaction.Description, transaction.Date);
+
+            asset.Add(newTransaction);
+
+            asset = await _repository.UpdateAssetAsync(asset, cancellationToken);
+
+            await _repository.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<AssetResponse?> GetAssetAsync(Guid assetId, CancellationToken cancellationToken = default)
