@@ -43,7 +43,7 @@
             var asset = new Asset("Asset1", 1);
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => asset.Add(null));
+            Assert.Throws<ArgumentNullException>(() => asset.Add(null!));
         }
 
         /// <summary>

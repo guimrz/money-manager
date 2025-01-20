@@ -11,6 +11,10 @@ namespace MoneyManager.Services.Assets.Repository
         private readonly ILogger _logger;
         private readonly AssetsServiceDbContext _dbContext;
 
+        public IQueryable<Asset> Assets => _dbContext.Set<Asset>();
+
+        public IQueryable<Currency> Currencies => _dbContext.Set<Currency>();
+
         public AssetsServiceRepository(ILogger<AssetsServiceRepository> logger, AssetsServiceDbContext dbContext)
         {
             ArgumentNullException.ThrowIfNull(logger);
@@ -20,30 +24,11 @@ namespace MoneyManager.Services.Assets.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<Asset?> GetAssetAsync(Guid assetId, CancellationToken cancellationToken = default)
-        {
-            Asset? assetDetails = await _dbContext.Set<Asset>()
-                .Include(asset => asset.Transactions)
-                .AsNoTracking()
-                .SingleOrDefaultAsync(asset => asset.Id == assetId);
-
-            return assetDetails;
-        }
-
         public async Task<IEnumerable<Currency>> GetCurrenciesAsync(CancellationToken cancellationToken = default)
         {
             IEnumerable<Currency> currencies = await _dbContext.Set<Currency>().ToListAsync(cancellationToken);
 
             return currencies;
-        }
-
-        public async Task<Currency?> GetCurrencyAsync(int currencyId, CancellationToken cancellationToken = default)
-        {
-            Currency? currency = await _dbContext.Set<Currency>()
-                .AsNoTracking()
-                .SingleOrDefaultAsync(curr => curr.Id == currencyId, cancellationToken);
-
-            return currency;
         }
 
         public async Task<Asset> InsertAssetAsync(Asset asset, CancellationToken cancellationToken = default)

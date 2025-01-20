@@ -18,7 +18,7 @@
         /// <summary>
         /// Gets the value of the transaction.
         /// </summary>
-        public decimal Value { get; protected set; }
+        public decimal Value { get; protected set; } // TODO: Rename to amount
 
         /// <summary>
         /// Gets the date and time of the transaction.

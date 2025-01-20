@@ -39,5 +39,13 @@ namespace MoneyManager.Services.Assets.Api.Controllers
 
             return Created();
         }
+
+        [HttpGet("{assetId:guid}/transactions")]
+        public async Task<IActionResult> GetAssetTransactionsAsync(Guid assetId, [FromQuery] DateTimeOffset? dateFrom = null, [FromQuery] DateTimeOffset? dateTo = null, CancellationToken cancellationToken = default)
+        {
+            var transactions = await _service.GetAssetTransactionsAsync(assetId, dateFrom, dateTo, cancellationToken);
+
+            return Ok(transactions);
+        }
     }
 }

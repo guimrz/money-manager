@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MoneyManager.Services.Assets.Application.Abstractions;
 using MoneyManager.Services.Assets.Application.Objects.Requests;
 using MoneyManager.Services.Assets.Application.Objects.Responses;
@@ -23,7 +24,9 @@ namespace MoneyManager.Services.Assets.Application
 
         public async Task<AssetResponse> CreateAssetAsync(CreateAssetRequest asset, CancellationToken cancellationToken = default)
         {
-            var currency = await _repository.GetCurrencyAsync(asset.CurrencyId, cancellationToken);
+            var currency = await _repository.Currencies
+                .AsNoTracking()
+                .SingleOrDefaultAsync(p => p.Id == asset.CurrencyId, cancellationToken);
 
             if (currency is null)
             {
@@ -40,7 +43,9 @@ namespace MoneyManager.Services.Assets.Application
 
         public async Task CreateAssetTransactionAsync(Guid assetId, CreateTransactionRequest transaction, CancellationToken cancellationToken = default)
         {
-            Asset? asset = await _repository.GetAssetAsync(assetId, cancellationToken);
+            Asset? asset = await _repository.Assets
+                .AsNoTracking()
+                .SingleOrDefaultAsync(p => p.Id == assetId, cancellationToken);
 
             if (asset is null)
             {
@@ -58,14 +63,34 @@ namespace MoneyManager.Services.Assets.Application
 
         public async Task<AssetResponse?> GetAssetAsync(Guid assetId, CancellationToken cancellationToken = default)
         {
-            var asset = await _repository.GetAssetAsync(assetId, cancellationToken);
+            var asset = await _repository.Assets
+                .AsNoTracking()
+                .SingleOrDefaultAsync(p => p.Id == assetId, cancellationToken);
 
             return _mapper.Map<AssetResponse?>(asset);
         }
 
+        public async Task<IEnumerable<TransactionResponse>> GetAssetTransactionsAsync(Guid assetId, DateTimeOffset? dateFrom = null, DateTimeOffset? dateTo = null, CancellationToken cancellationToken = default)
+        {
+            var asset = await _repository.Assets
+                .AsNoTracking()
+                .Include(p => p.Transactions
+                    .Where(t => (dateFrom == null || t.Date >= dateFrom) && (dateTo == null || t.Date <= dateFrom)))
+                .SingleOrDefaultAsync(p => p.Id == assetId, cancellationToken);
+
+            if (asset is null)
+            {
+                throw new InvalidOperationException($"The asset with id '{assetId}' could not be found.");
+            }
+
+            return _mapper.Map<IEnumerable<TransactionResponse>>(asset.Transactions);
+        }
+
         public async Task<IEnumerable<CurrencyResponse>> GetCurrenciesAsync(CancellationToken cancellationToken = default)
         {
-            var currencies = await _repository.GetCurrenciesAsync(cancellationToken);
+            var currencies = await _repository.Currencies
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
 
             return _mapper.Map<IEnumerable<CurrencyResponse>>(currencies);
         }
