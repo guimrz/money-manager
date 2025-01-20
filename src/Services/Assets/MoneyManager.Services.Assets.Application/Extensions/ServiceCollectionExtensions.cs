@@ -17,6 +17,7 @@ namespace MoneyManager.Services.Assets.Application.Extensions
             services.AddAutoMapper(config =>
             {
                 config.AddProfile<CurrencyMapProfile>();
+                config.AddProfile<AssetMapProfile>();
             });
 
             return services;

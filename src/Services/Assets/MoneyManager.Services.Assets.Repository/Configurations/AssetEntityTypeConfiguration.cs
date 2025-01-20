@@ -20,14 +20,10 @@ namespace MoneyManager.Services.Assets.Repository.Configurations
                 .HasForeignKey(p => p.CurrencyId)
                 .IsRequired();
 
-            builder.HasMany<Transaction>()
+            builder.Metadata.FindNavigation(nameof(Asset.Transactions))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.HasMany(p => p.Transactions)
                 .WithOne()
-                .HasForeignKey("AssetId")
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Metadata.FindNavigation(nameof(Asset.Transactions))!
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
-
         }
     }
 }

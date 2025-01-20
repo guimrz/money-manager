@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MoneyManager.Services.Assets.Repository.Abstractions;
+using System.Reflection;
 
 namespace MoneyManager.Services.Assets.Repository.Extensions
 {
@@ -18,7 +19,10 @@ namespace MoneyManager.Services.Assets.Repository.Extensions
             {
                 var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlOptions => 
+                {
+                    sqlOptions.MigrationsAssembly(Assembly.GetExecutingAssembly());
+                });
             });
 
             return services;

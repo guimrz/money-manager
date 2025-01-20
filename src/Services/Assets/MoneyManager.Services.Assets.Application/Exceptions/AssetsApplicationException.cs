@@ -2,5 +2,8 @@
 {
     public class AssetsApplicationException : Exception
     {
+        public AssetsApplicationException(string message) : base(message) { }
+
+        public AssetsApplicationException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

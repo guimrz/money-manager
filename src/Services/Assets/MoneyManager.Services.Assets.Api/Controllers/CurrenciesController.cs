@@ -26,9 +26,6 @@ namespace MoneyManager.Services.Assets.Api.Controllers
         /// <response code="200">
         /// Returns a collection of <see cref="CurrencyResponse"/> objects.
         /// </response>
-        /// <example>
-        /// GET /api/currencies
-        /// </example>
         [HttpGet]
         [ProducesResponseType<CurrencyResponse[]>((int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCurrenciesAsync(CancellationToken cancellationToken = default)

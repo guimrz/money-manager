@@ -4,11 +4,8 @@
     /// Represents an asset.
     /// </summary>
     public class Asset
-    {
-        /// <summary>
-        /// List of transactions associated with the asset.
-        /// </summary>
-        private List<Transaction> _transactions;
+    {      
+        private readonly List<Transaction> _transactions;
 
         /// <summary>
         /// Gets the unique identifier of the asset.
