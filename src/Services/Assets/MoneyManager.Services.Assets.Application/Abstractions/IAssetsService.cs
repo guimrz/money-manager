@@ -16,5 +16,7 @@ namespace MoneyManager.Services.Assets.Application.Abstractions
         Task<IEnumerable<TransactionResponse>> GetAssetTransactionsAsync(Guid assetId, DateTimeOffset? dateFrom = null, DateTimeOffset? dateTo = null, CancellationToken cancellationToken = default);
 
         Task<IEnumerable<AssetResponse>> GetAssetsAsync(string? name, CancellationToken cancellationToken = default);
+
+        Task DeleteAssetTransactionAsync(Guid assetId, Guid transactionId, CancellationToken cancellationToken = default);
     }
 }

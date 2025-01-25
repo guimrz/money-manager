@@ -104,5 +104,31 @@ namespace MoneyManager.Services.Assets.Application
 
             return _mapper.Map<IEnumerable<CurrencyResponse>>(currencies);
         }
+
+        public async Task DeleteAssetTransactionAsync(Guid assetId, Guid transactionId, CancellationToken cancellationToken = default)
+        {
+            var asset = await _repository.Assets
+                .Include(p => p.Transactions
+                    .Where(t => t.Id == transactionId))
+                .SingleOrDefaultAsync(p => p.Id == assetId);
+
+            if (asset is null)
+            {
+                throw new InvalidOperationException($"The asset with id '{assetId}' could not be found.");
+            }
+
+            var transaction = asset.Transactions.SingleOrDefault();
+
+            if (transaction is null)
+            {
+                throw new InvalidOperationException($"The transaction with id '{transactionId}' could not be found.");
+            }
+
+
+            asset.Remove(transaction);
+
+            await _repository.UpdateAssetAsync(asset);
+            await _repository.SaveChangesAsync();
+        }
     }
 }
