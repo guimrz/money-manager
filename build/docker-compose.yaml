@@ -1,0 +1,36 @@
+services:
+    sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        container_name: sqlserver
+        environment: 
+            ACCEPT_EULA: "Y"
+            SA_PASSWORD: $sqlserver_password
+        networks: 
+            - services_network
+        expose: 
+            - '1433'
+        ports:
+            - "60099:1433"        
+    
+    assets_api:
+        image: assets_api:latest
+        container_name: assets_api
+        depends_on:
+            - sqlserver
+        build:
+            context: ../src/
+            dockerfile: Services/Assets/MoneyManager.Services.Assets.Api/Dockerfile
+        networks:
+            - services_network
+        expose:
+            - 8080
+        ports:
+            - "60101:8080"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=$aspnetcore_environment
+            - ConnectionStrings__DefaultConnection=Data Source=sqlserver;Initial Catalog=development_Assets;User ID=$sqlserver_user;Password=$sqlserver_password;Encrypt=False
+            
+networks:
+    services_network:
+        driver: "bridge"
+        
